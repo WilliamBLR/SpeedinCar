@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrador | Speed in Car</title>
+  <meta name="description" content="Administrador local para agregar vehículos al catálogo de Speed in Car." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="admin">
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html#home" class="nav-logo" id="nav-logo-link">
+        <img src="images/logo.png" alt="Speed in Car Logo" class="logo-img" />
+        <span class="logo-text">SPEED <span class="logo-accent">IN CAR</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#home" class="nav-link" data-nav-page="home">Inicio</a></li>
+        <li><a href="catalogo.html" class="nav-link" data-nav-page="catalogo">Catálogo</a></li>
+        <li><a href="index.html#servicios" class="nav-link">Servicios</a></li>
+        <li><a href="index.html#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="admin.html" class="nav-link" data-nav-page="admin">Admin</a></li>
+        <li><a href="index.html#contacto" class="nav-link nav-cta">Contactar</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+    <section class="page-hero compact-page-hero">
+      <div class="container">
+        <span class="section-tag">Administrador local</span>
+        <h1 class="page-hero-title">Añadir <span class="accent">Vehículo</span></h1>
+        <p class="page-hero-desc">Los autos agregados aquí se guardan en este navegador y aparecen en la página principal y en el catálogo completo.</p>
+      </div>
+    </section>
+
+    <section class="section admin-section" id="admin">
+      <div class="container">
+        <div class="admin-grid">
+          <form class="admin-form" id="admin-car-form">
+            <div class="admin-form-row">
+              <label>
+                Marca
+                <input type="text" id="admin-brand" placeholder="Hyundai" required />
+              </label>
+              <label>
+                Modelo
+                <input type="text" id="admin-model" placeholder="Tucson TL" required />
+              </label>
+            </div>
+
+            <div class="admin-form-row">
+              <label>
+                Categoría
+                <select id="admin-category" required>
+                  <option value="suv">SUV</option>
+                  <option value="sedan">Sedán / Hatch</option>
+                </select>
+              </label>
+              <label>
+                Estado
+                <select id="admin-status" required>
+                  <option value="Disponible">Disponible</option>
+                  <option value="Vendido">Vendido</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="admin-form-row">
+              <label>
+                Año
+                <input type="number" id="admin-year" placeholder="2024" min="1980" max="2030" required />
+              </label>
+              <label>
+                Kilometraje
+                <input type="text" id="admin-km" placeholder="15.500 km" required />
+              </label>
+            </div>
+
+            <div class="admin-form-row">
+              <label>
+                Motor
+                <input type="text" id="admin-engine" placeholder="2.0 AT" required />
+              </label>
+              <label>
+                Transmisión
+                <input type="text" id="admin-transmission" placeholder="Automática" required />
+              </label>
+            </div>
+
+            <div class="admin-form-row">
+              <label>
+                Tracción
+                <input type="text" id="admin-traction" placeholder="Delantera" />
+              </label>
+              <label>
+                Puertas
+                <input type="text" id="admin-doors" placeholder="5 puertas" />
+              </label>
+            </div>
+
+            <div class="admin-form-row">
+              <label>
+                Precio
+                <input type="text" id="admin-price" placeholder="$18.500.000" required />
+              </label>
+              <label>
+                Fotos
+                <input type="text" id="admin-images" placeholder="images/auto.png, images/auto-2.png" required />
+              </label>
+            </div>
+
+            <label>
+              Características
+              <textarea id="admin-features" rows="4" placeholder="Control crucero&#10;Cámara de retroceso&#10;Revisión técnica al día"></textarea>
+            </label>
+
+            <div class="admin-actions">
+              <button type="submit" class="btn btn-primary">Agregar auto</button>
+              <button type="button" class="btn btn-outline" id="admin-clear">Borrar agregados</button>
+              <a href="catalogo.html" class="btn btn-outline">Ver catálogo</a>
+            </div>
+            <p class="admin-message" id="admin-message" aria-live="polite"></p>
+          </form>
+
+          <div class="admin-panel">
+            <h3>Autos agregados</h3>
+            <div class="admin-list" id="admin-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html#home" class="nav-logo" id="footer-logo">
+            <img src="images/logo.png" alt="Speed in Car" class="logo-img" />
+            <span class="logo-text">SPEED <span class="logo-accent">IN CAR</span></span>
+          </a>
+          <p class="footer-tagline">Consignación y compra/venta de vehículos en Santiago de Chile. 100% online.</p>
+        </div>
+        <div class="footer-links-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index.html#home">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="index.html#servicios">Servicios</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="admin.html">Admin</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li>Santiago / RM</li>
+            <li><a href="https://wa.me/56912345678" target="_blank">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/speed_incar/" target="_blank">@speed_incar</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="footer-year">2026</span> Speed in Car Chile. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

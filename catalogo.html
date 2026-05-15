@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Vehículos | Speed in Car</title>
+  <meta name="description" content="Catálogo completo de vehículos disponibles en Speed in Car. Compra, venta y consignación de autos en Santiago y la RM." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="catalogo">
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html#home" class="nav-logo" id="nav-logo-link">
+        <img src="images/logo.png" alt="Speed in Car Logo" class="logo-img" />
+        <span class="logo-text">SPEED <span class="logo-accent">IN CAR</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#home" class="nav-link" data-nav-page="home">Inicio</a></li>
+        <li><a href="catalogo.html" class="nav-link" data-nav-page="catalogo">Catálogo</a></li>
+        <li><a href="index.html#servicios" class="nav-link">Servicios</a></li>
+        <li><a href="index.html#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="admin.html" class="nav-link" data-nav-page="admin">Admin</a></li>
+        <li><a href="index.html#contacto" class="nav-link nav-cta">Contactar</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+    <section class="page-hero compact-page-hero">
+      <div class="container">
+        <span class="section-tag">Catálogo completo</span>
+        <h1 class="page-hero-title">Vehículos <span class="accent">Disponibles</span></h1>
+        <p class="page-hero-desc">Explora todos los autos publicados y consulta disponibilidad por WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="section catalog-section catalog-page-section" id="catalogo">
+      <div class="container">
+        <div class="catalog-filters" id="catalog-filters">
+          <button class="filter-btn active" data-filter="all" id="filter-all">Todos</button>
+          <button class="filter-btn" data-filter="suv" id="filter-suv">SUV</button>
+          <button class="filter-btn" data-filter="sedan" id="filter-sedan">Sedán / Hatch</button>
+        </div>
+
+        <div class="cars-grid" id="cars-grid" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html#home" class="nav-logo" id="footer-logo">
+            <img src="images/logo.png" alt="Speed in Car" class="logo-img" />
+            <span class="logo-text">SPEED <span class="logo-accent">IN CAR</span></span>
+          </a>
+          <p class="footer-tagline">Consignación y compra/venta de vehículos en Santiago de Chile. 100% online.</p>
+        </div>
+        <div class="footer-links-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index.html#home">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="index.html#servicios">Servicios</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="admin.html">Admin</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li>Santiago / RM</li>
+            <li><a href="https://wa.me/56912345678" target="_blank">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/speed_incar/" target="_blank">@speed_incar</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="footer-year">2026</span> Speed in Car Chile. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/56912345678?text=Hola Speed in Car!" target="_blank" class="wsp-float" id="wsp-float" aria-label="Abrir WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.077 20.317A11.965 11.965 0 0 0 12 22.944c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12S0 5.316 0 10.944c0 2.114.552 4.1 1.515 5.823L.057 23.057l6.32-1.74a11.93 11.93 0 0 0 .7.4v-.4z"/></svg>
+  </a>
+
+  <div class="modal-overlay" id="car-modal" role="dialog" aria-modal="true" aria-label="Detalle del vehículo">
+    <div class="modal-box" id="modal-box">
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
+      <button class="modal-nav modal-prev" id="modal-prev" aria-label="Auto anterior">‹</button>
+      <button class="modal-nav modal-next" id="modal-next" aria-label="Auto siguiente">›</button>
+
+      <div class="modal-inner">
+        <div class="modal-gallery" id="modal-gallery">
+          <div class="modal-main-img-wrap">
+            <img src="" alt="" class="modal-main-img" id="modal-main-img" />
+            <div class="modal-img-badge" id="modal-img-badge">Disponible</div>
+          </div>
+          <div class="modal-thumbs" id="modal-thumbs"></div>
+        </div>
+
+        <div class="modal-info" id="modal-info">
+          <div class="modal-brand" id="modal-brand">Marca</div>
+          <h2 class="modal-title" id="modal-title">Modelo</h2>
+          <div class="modal-price-row">
+            <span class="modal-price" id="modal-price">$0</span>
+            <span class="modal-status" id="modal-status">Disponible</span>
+          </div>
+          <div class="modal-specs-grid" id="modal-specs-grid"></div>
+          <div class="modal-divider"></div>
+          <ul class="modal-features" id="modal-features"></ul>
+          <div class="modal-actions" id="modal-actions">
+            <a href="#" target="_blank" class="btn btn-whatsapp btn-lg" id="modal-wsp-btn">Consultar por WhatsApp</a>
+            <a href="#" target="_blank" class="btn btn-primary" id="modal-video-btn">Pedir video</a>
+            <a href="#" target="_blank" class="btn btn-outline" id="modal-visit-btn">Agendar visita</a>
+            <a href="https://www.instagram.com/speed_incar/" target="_blank" class="btn btn-outline" id="modal-ig-btn">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

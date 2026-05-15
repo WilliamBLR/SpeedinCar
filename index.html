@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speed in Car – Compra, Venta y Consignación de Vehículos en Santiago</title>
+  <meta name="description" content="Speed in Car: Tu mejor opción para comprar, vender o consignar vehículos en Santiago y la RM. 100% online, con gestión en notaría incluida. Contáctanos por WhatsApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="home">
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html#home" class="nav-logo" id="nav-logo-link">
+        <img src="images/logo.png" alt="Speed in Car Logo" class="logo-img" />
+        <span class="logo-text">SPEED <span class="logo-accent">IN CAR</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#home" class="nav-link" id="link-home" data-nav-page="home">Inicio</a></li>
+        <li><a href="catalogo.html" class="nav-link" id="link-catalog" data-nav-page="catalogo">Catálogo</a></li>
+        <li><a href="index.html#servicios" class="nav-link" id="link-services">Servicios</a></li>
+        <li><a href="index.html#nosotros" class="nav-link" id="link-about">Nosotros</a></li>
+        <li><a href="admin.html" class="nav-link" id="link-admin" data-nav-page="admin">Admin</a></li>
+        <li><a href="index.html#contacto" class="nav-link nav-cta" id="link-contact">Contactar</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <img src="images/hero_bg.png" alt="Speed in Car hero" class="hero-bg-img" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge" id="hero-badge">
+        <span class="badge-dot"></span>
+        Disponibles en Santiago / RM
+      </div>
+      <h1 class="hero-title" id="hero-title">
+        Tu próximo auto<br />
+        <span class="hero-title-accent">te está esperando</span>
+      </h1>
+      <p class="hero-subtitle" id="hero-subtitle">
+        Compra, venta y consignación de vehículos de forma 100% online.<br />
+        Gestión notarial incluida. ¡Agenda tu evaluación hoy mismo!
+      </p>
+      <div class="hero-buttons" id="hero-buttons">
+        <a href="#catalogo" class="btn btn-primary" id="btn-ver-autos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Ver Autos
+        </a>
+        <a href="https://wa.me/56912345678?text=Hola! Me interesa conocer más sobre sus vehículos disponibles." target="_blank" class="btn btn-whatsapp" id="btn-whatsapp-hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.077 20.317A11.965 11.965 0 0 0 12 22.944c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12S0 5.316 0 10.944c0 2.114.552 4.1 1.515 5.823L.057 23.057l6.32-1.74a11.93 11.93 0 0 0 .7.4v-.4z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <div class="hero-stats" id="hero-stats">
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Online</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">+50</span>
+          <span class="stat-label">Autos vendidos</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">1076</span>
+          <span class="stat-label">Seguidores</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" id="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== CATÁLOGO ========== -->
+  <section class="section catalog-section" id="catalogo">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Disponibles ahora</span>
+        <h2 class="section-title" id="catalog-title">Vehículos <span class="accent">Disponibles</span></h2>
+        <p class="section-desc">Todos nuestros autos pasan por revisión técnica. Gestión de transferencia incluida.</p>
+      </div>
+
+      <div class="catalog-filters" id="catalog-filters">
+        <button class="filter-btn active" data-filter="all" id="filter-all">Todos</button>
+        <button class="filter-btn" data-filter="suv" id="filter-suv">SUV</button>
+        <button class="filter-btn" data-filter="sedan" id="filter-sedan">Sedán / Hatch</button>
+      </div>
+
+      <div class="cars-grid" id="cars-grid" aria-live="polite"></div><!-- /cars-grid -->
+
+      <div class="catalog-cta" id="catalog-cta">
+        <p>¿No encuentras lo que buscas? Tenemos más vehículos disponibles.</p>
+        <a href="catalogo.html" class="btn btn-primary" id="btn-catalogo-completo">Ver catálogo completo</a>
+        <a href="https://www.instagram.com/speed_incar/" target="_blank" class="btn btn-outline" id="btn-instagram">Ver Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICIOS ========== -->
+  <section class="section services-section" id="servicios">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Lo que hacemos</span>
+        <h2 class="section-title" id="services-title">Nuestros <span class="accent">Servicios</span></h2>
+        <p class="section-desc">Todo el proceso de compra o venta sin moverte de tu casa.</p>
+      </div>
+      <div class="services-grid" id="services-grid">
+        <div class="service-card" id="svc-compra">
+          <div class="service-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Compra de Vehículos</h3>
+          <p class="service-desc">¿Quieres vender tu auto? Te hacemos una evaluación gratuita y te ofrecemos el mejor precio del mercado. Pago inmediato.</p>
+        </div>
+        <div class="service-card" id="svc-venta">
+          <div class="service-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Venta de Vehículos</h3>
+          <p class="service-desc">Explora nuestro catálogo con los mejores autos seleccionados. Todos revisados y con historia verificada.</p>
+        </div>
+        <div class="service-card featured" id="svc-consignacion">
+          <div class="service-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Consignación</h3>
+          <p class="service-desc">¿No tienes tiempo de vender? Nosotros lo hacemos por ti. Dejamos tu auto en consignación y gestionamos todo el proceso.</p>
+          <span class="service-tag">Más popular</span>
+        </div>
+        <div class="service-card" id="svc-notaria">
+          <div class="service-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Gestión en Notaría</h3>
+          <p class="service-desc">Nos encargamos de todo el papeleo y la transferencia legal del vehículo. Proceso 100% online y seguro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROCESO ========== -->
+  <section class="section process-section" id="proceso">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Simple y rápido</span>
+        <h2 class="section-title">¿Cómo <span class="accent">funciona</span>?</h2>
+      </div>
+      <div class="process-steps" id="process-steps">
+        <div class="step" id="step-1">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Contáctanos</h3>
+            <p>Escríbenos por WhatsApp o Instagram y cuéntanos qué buscas o qué quieres vender.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step" id="step-2">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Evaluación</h3>
+            <p>Agendamos una evaluación de tu vehículo o te mostramos las opciones disponibles.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step" id="step-3">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Acuerdo</h3>
+            <p>Llegamos a un precio justo. Gestionamos el financiamiento si lo necesitas.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step" id="step-4">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>¡Listo!</h3>
+            <p>Transferencia legal gestionada por nosotros. Todo 100% online y sin complicaciones.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NOSOTROS ========== -->
+  <section class="section about-section" id="nosotros">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text" id="about-text">
+          <span class="section-tag">Quiénes somos</span>
+          <h2 class="section-title">Tu confianza es nuestra <span class="accent">prioridad</span></h2>
+          <p>Somos <strong>Speed in Car</strong>, una empresa de compra, venta y consignación de vehículos ubicada en Santiago de Chile. Operamos 100% online para facilitar tu experiencia.</p>
+          <p>Nos diferenciamos por la <strong>transparencia</strong> en cada operación, el acompañamiento personalizado y la rapidez en los procesos. Con nosotros, comprar o vender tu auto es simple, seguro y sin dolores de cabeza.</p>
+          <ul class="about-features" id="about-features">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Operación 100% online
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Gestión en Notaría incluida
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Evaluación gratuita de tu vehículo
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Atención personalizada por DM y WhatsApp
+            </li>
+          </ul>
+          <div class="about-social" id="about-social">
+            <a href="https://www.instagram.com/speed_incar/" target="_blank" class="social-link" id="link-ig">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              @speed_incar
+            </a>
+          </div>
+        </div>
+        <div class="about-img-wrap" id="about-img">
+          <div class="about-img-card">
+            <img src="images/logo.png" alt="Speed in Car" class="about-logo" />
+            <div class="about-tagline">Compra · Venta · Confianza</div>
+          </div>
+          <div class="about-stat-card" id="about-stat1">
+            <span class="as-num">+1076</span>
+            <span class="as-label">Seguidores</span>
+          </div>
+          <div class="about-stat-card red" id="about-stat2">
+            <span class="as-num">100%</span>
+            <span class="as-label">Online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACTO / CTA ========== -->
+  <section class="section contact-section" id="contacto">
+    <div class="container">
+      <div class="contact-box" id="contact-box">
+        <div class="contact-glow"></div>
+        <div class="contact-content">
+          <span class="section-tag">¿Listo para empezar?</span>
+          <h2 class="contact-title">Habla con nosotros hoy</h2>
+          <p class="contact-desc">Agenda tu evaluación, consulta por un auto o consigna el tuyo. Respondemos rápido por WhatsApp o Instagram.</p>
+          <div class="contact-buttons" id="contact-buttons">
+            <a href="https://wa.me/56912345678?text=Hola Speed in Car! Me gustaría consultar sobre sus vehículos disponibles." target="_blank" class="btn btn-whatsapp btn-lg" id="btn-wsp-main">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.077 20.317A11.965 11.965 0 0 0 12 22.944c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12S0 5.316 0 10.944c0 2.114.552 4.1 1.515 5.823L.057 23.057l6.32-1.74a11.93 11.93 0 0 0 .7.4v-.4z"/></svg>
+              Escribir por WhatsApp
+            </a>
+            <a href="https://www.instagram.com/speed_incar/" target="_blank" class="btn btn-outline btn-lg" id="btn-ig-main">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              Ver Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html#home" class="nav-logo" id="footer-logo">
+            <img src="images/logo.png" alt="Speed in Car" class="logo-img" />
+            <span class="logo-text">SPEED <span class="logo-accent">IN CAR</span></span>
+          </a>
+          <p class="footer-tagline">Consignación y compra/venta de vehículos en Santiago de Chile. 100% online.</p>
+        </div>
+        <div class="footer-links-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index.html#home" id="footer-link-home">Inicio</a></li>
+            <li><a href="catalogo.html" id="footer-link-catalog">Catálogo</a></li>
+            <li><a href="index.html#servicios" id="footer-link-services">Servicios</a></li>
+            <li><a href="index.html#nosotros" id="footer-link-about">Nosotros</a></li>
+            <li><a href="admin.html" id="footer-link-admin">Admin</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li>📍 Santiago / RM</li>
+            <li><a href="https://wa.me/56912345678" target="_blank" id="footer-wsp">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/speed_incar/" target="_blank" id="footer-ig">@speed_incar</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="footer-year">2026</span> Speed in Car Chile. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/56912345678?text=Hola Speed in Car!" target="_blank" class="wsp-float" id="wsp-float" aria-label="Abrir WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.077 20.317A11.965 11.965 0 0 0 12 22.944c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12S0 5.316 0 10.944c0 2.114.552 4.1 1.515 5.823L.057 23.057l6.32-1.74a11.93 11.93 0 0 0 .7.4v-.4z"/></svg>
+  </a>
+
+  <!-- ========== MODAL DE DETALLE ========== -->
+  <div class="modal-overlay" id="car-modal" role="dialog" aria-modal="true" aria-label="Detalle del vehículo">
+    <div class="modal-box" id="modal-box">
+
+      <!-- Close -->
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Nav flechas -->
+      <button class="modal-nav modal-prev" id="modal-prev" aria-label="Auto anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="modal-nav modal-next" id="modal-next" aria-label="Auto siguiente">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <div class="modal-inner">
+
+        <!-- Galería -->
+        <div class="modal-gallery" id="modal-gallery">
+          <div class="modal-main-img-wrap">
+            <img src="" alt="" class="modal-main-img" id="modal-main-img" />
+            <div class="modal-img-badge" id="modal-img-badge">Disponible</div>
+          </div>
+          <div class="modal-thumbs" id="modal-thumbs">
+            <!-- thumbnails rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="modal-info" id="modal-info">
+          <div class="modal-brand" id="modal-brand">Marca</div>
+          <h2 class="modal-title" id="modal-title">Modelo</h2>
+
+          <div class="modal-price-row">
+            <span class="modal-price" id="modal-price">$0</span>
+            <span class="modal-status" id="modal-status">Disponible</span>
+          </div>
+
+          <div class="modal-specs-grid" id="modal-specs-grid">
+            <!-- rendered by JS -->
+          </div>
+
+          <div class="modal-divider"></div>
+
+          <ul class="modal-features" id="modal-features">
+            <!-- rendered by JS -->
+          </ul>
+
+          <div class="modal-actions" id="modal-actions">
+            <a href="#" target="_blank" class="btn btn-whatsapp btn-lg" id="modal-wsp-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.077 20.317A11.965 11.965 0 0 0 12 22.944c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12S0 5.316 0 10.944c0 2.114.552 4.1 1.515 5.823L.057 23.057l6.32-1.74a11.93 11.93 0 0 0 .7.4v-.4z"/></svg>
+              Consultar por WhatsApp
+            </a>
+            <a href="#" target="_blank" class="btn btn-primary" id="modal-video-btn">
+              Pedir video
+            </a>
+            <a href="#" target="_blank" class="btn btn-outline" id="modal-visit-btn">
+              Agendar visita
+            </a>
+            <a href="https://www.instagram.com/speed_incar/" target="_blank" class="btn btn-outline" id="modal-ig-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /modal-inner -->
+    </div><!-- /modal-box -->
+  </div><!-- /modal-overlay -->
+
+  <script src="main.js"></script>
+</body>
+</html>
