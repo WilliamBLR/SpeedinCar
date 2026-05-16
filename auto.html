@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de vehiculo | Speed in Car</title>
+  <meta name="description" content="Ficha detallada de vehiculo disponible en Speed in Car." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="catalogo" class="detail-loading">
+  <header class="site-header solid" id="navbar">
+    <div class="nav-container">
+      <a href="/#home" class="brand-link" aria-label="Speed in Car">
+        <img src="images/logo.png" alt="Speed in Car" class="brand-mark" />
+        <span class="brand-name">Speed in Car</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a href="/#home" class="nav-link" data-nav-page="home">Inicio</a>
+        <a href="/catalogo" class="nav-link" data-nav-page="catalogo">Cat&aacute;logo</a>
+        <a href="/#servicios" class="nav-link">Servicios</a>
+        <a href="/#proceso" class="nav-link">Proceso</a>
+        <a href="/#contacto" class="nav-link nav-cta">Contactar</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="detail-main">
+    <section class="detail-hero">
+      <div class="container detail-layout">
+        <div class="detail-media">
+          <img src="images/logo.png" alt="" id="detail-cover" />
+          <div class="detail-gallery" id="detail-gallery"></div>
+        </div>
+
+        <article class="detail-panel">
+          <a href="/catalogo" class="detail-back">Volver al cat&aacute;logo</a>
+          <div class="detail-status-row">
+            <span class="modal-status" id="detail-status">Disponible</span>
+            <span id="detail-location">Santiago</span>
+          </div>
+          <span class="detail-kicker" id="detail-kicker">Marca</span>
+          <h1 id="detail-title">Veh&iacute;culo</h1>
+          <strong class="detail-price" id="detail-price">$0</strong>
+
+          <div class="detail-tags" id="detail-tags"></div>
+          <div class="detail-specs" id="detail-specs"></div>
+
+          <ul class="detail-highlights" id="detail-highlights"></ul>
+
+          <div class="detail-actions">
+            <a href="#" target="_blank" class="btn btn-whatsapp" id="detail-wsp">Consultar por WhatsApp</a>
+            <a href="#" target="_blank" class="btn btn-outline" id="detail-video">Pedir video</a>
+            <a href="#" target="_blank" class="btn btn-outline" id="detail-visit">Agendar visita</a>
+            <button type="button" class="btn btn-outline" id="detail-share">Compartir ficha</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section detail-related-section">
+      <div class="container">
+        <div class="section-heading split-heading">
+          <div>
+            <span class="eyebrow">Tambien disponible</span>
+            <h2>Otras alternativas</h2>
+          </div>
+          <a href="/catalogo" class="text-link">Ver cat&aacute;logo</a>
+        </div>
+        <div class="related-grid" id="related-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="/#home" class="brand-link">
+          <img src="images/logo.png" alt="Speed in Car" class="brand-mark" />
+          <span class="brand-name">Speed in Car</span>
+        </a>
+        <p>Compra, venta y consignaci&oacute;n de veh&iacute;culos en Santiago de Chile.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="/catalogo">Cat&aacute;logo</a>
+        <a href="/#servicios">Servicios</a>
+        <a href="/#proceso">Proceso</a>
+        <a href="/#contacto">Contacto</a>
+      </nav>
+      <div class="footer-contact">
+        <a href="https://wa.me/56998261166" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/speed_incar/" target="_blank">@speed_incar</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="footer-year">2026</span> Speed in Car Chile.</span>
+    </div>
+  </footer>
+
+  <script src="firebase-config.js"></script>
+  <script src="inventory.js"></script>
+  <script src="auto.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,137 +1,25 @@
-/* =============================================
-   SPEED IN CAR - JavaScript
-   ============================================= */
-
-const WHATSAPP_NUMBER = '56912345678';
+const WHATSAPP_NUMBER = '56998261166';
 const WSP_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
-const CUSTOM_CARS_KEY = 'speedInCar.customCars';
 
-const BASE_CARS = {
-  scirocco: {
-    category: 'sedan',
-    brand: 'Volkswagen',
-    model: 'Scirocco',
-    year: '2017',
-    km: '118.000 km',
-    shortSpec: '1.4 Turbo TSI DSG',
-    engine: '1.4 Turbo TSI',
-    transmission: 'DSG (automático)',
-    traction: 'Delantera',
-    doors: '3 puertas',
-    price: '$14.800.000',
-    status: 'Disponible',
-    images: ['images/scirocco.png'],
-    features: [
-      'Motor Turbo 1.4 TSI 122 HP',
-      'Caja DSG de doble embrague',
-      'Control de crucero activo',
-      'Alzavidrios eléctricos x4',
-      'Pantalla multimedia integrada',
-      'Revisión técnica al día',
-    ],
-  },
-  tucson: {
-    category: 'suv',
-    brand: 'Hyundai',
-    model: 'Tucson TL',
-    year: '2018',
-    km: '55.000 km',
-    shortSpec: '2.0 4x2 MT',
-    engine: '2.0 GDI',
-    transmission: 'Manual (MT)',
-    traction: '4x2',
-    doors: '5 puertas',
-    price: '$13.000.000',
-    status: 'Disponible',
-    images: ['images/tucson.png'],
-    features: [
-      'Motor 2.0 GDI 150 HP',
-      'Transmisión manual 6 velocidades',
-      'Cámara de retroceso',
-      'Climatizador automático',
-      'Control de estabilidad ESC',
-      'Revisión técnica al día',
-    ],
-  },
-  grandcreta: {
-    category: 'suv',
-    brand: 'Hyundai',
-    model: 'Grand Creta',
-    year: '2024',
-    km: '15.500 km',
-    shortSpec: '2.0 AT',
-    engine: '2.0 MPI',
-    transmission: 'Automática (AT)',
-    traction: 'Delantera',
-    doors: '5 puertas',
-    price: '$18.500.000',
-    status: 'Disponible',
-    images: ['images/grandcreta.png'],
-    features: [
-      'Motor 2.0 MPI 165 HP',
-      'Caja automática de 6 velocidades',
-      'Pantalla táctil 10.25"',
-      'Apple CarPlay / Android Auto',
-      'Control de crucero adaptativo',
-      'Casi nueva - solo 15.500 km',
-    ],
-  },
-  mokka: {
-    category: 'suv',
-    brand: 'Opel',
-    model: 'Mokka Elegance',
-    year: '2025',
-    km: '3.600 km',
-    shortSpec: '1.2T AT',
-    engine: '1.2 Turbo',
-    transmission: 'Automática (AT)',
-    traction: 'Delantera',
-    doors: '5 puertas',
-    price: '$16.800.000',
-    status: 'Disponible',
-    images: ['images/mokka.png'],
-    features: [
-      'Motor 1.2T de 130 HP',
-      'Caja automática 8 velocidades',
-      'Diseño interior "Pixel" Visor',
-      'Adaptive Cruise Control',
-      'Asientos calefaccionados',
-      'Prácticamente nuevo - 3.600 km',
-    ],
-  },
-  evoltis: {
-    category: 'suv',
-    brand: 'Subaru',
-    model: 'Evoltis Limited AWD',
-    year: '2021',
-    km: '60.000 km',
-    shortSpec: 'AWD',
-    engine: '2.5 Boxer',
-    transmission: 'Automática CVT',
-    traction: 'AWD Simétrica',
-    doors: '5 puertas',
-    price: '$24.500.000',
-    status: 'Disponible',
-    images: ['images/evoltis.png'],
-    features: [
-      'Motor Boxer 2.5L 185 HP',
-      'Tracción AWD Simétrica permanente',
-      'EyeSight - seguridad activa',
-      'Cuero genuino con calefacción',
-      'Apertura y arranque sin llave',
-      'Panoramic Moonroof',
-    ],
-  },
+const state = {
+  filter: 'all',
+  query: '',
+  sort: 'featured',
+  currentCarId: null,
 };
 
-let customCars = loadCustomCars();
-let CARS = {};
-let CAR_IDS = [];
-let currentCarId = null;
-let activeFilter = 'all';
-let statsAnimated = false;
+let inventory = (window.SPEEDINCAR_INVENTORY || []).map(normalizeCar);
+let remoteUnsubscribe = null;
 
-const CHECK_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+function currency(value) {
+  const number = Number(value) || 0;
+  return `$${number.toLocaleString('es-CL')}`;
+}
+
+function kmLabel(value) {
+  const number = Number(value) || 0;
+  return `${number.toLocaleString('es-CL')} km`;
+}
 
 function escapeHTML(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -143,199 +31,262 @@ function escapeHTML(value) {
   }[char]));
 }
 
-function normalizeImages(images) {
-  const list = Array.isArray(images) ? images : String(images || '').split(/[\n,;]+/);
-  const cleaned = list
-    .map(src => String(src).trim().replace(/\\/g, '/'))
-    .filter(Boolean);
-
-  return cleaned.length ? cleaned : ['images/logo.png'];
+function normalizeText(value) {
+  return String(value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 }
 
-function normalizeFeatures(features) {
-  if (Array.isArray(features)) return features.filter(Boolean);
-  return String(features || '')
-    .split(/\r?\n/)
+function normalizeList(value) {
+  if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
+  return String(value || '')
+    .split(/[\n,;]+/)
     .map(item => item.trim())
     .filter(Boolean);
 }
 
+function uniqueList(list) {
+  return [...new Set(list.filter(Boolean))];
+}
+
 function normalizeCar(car) {
+  const cover = car.cover || (Array.isArray(car.images) ? car.images[0] : '') || 'images/logo.png';
+  const images = uniqueList([cover, ...normalizeList(car.images)]).map(src => src.replace(/\\/g, '/'));
+
   return {
+    id: car.id,
     category: car.category || 'suv',
     brand: car.brand || 'Marca',
     model: car.model || 'Modelo',
-    year: car.year || 'Año',
-    km: car.km || 'Kilometraje',
-    shortSpec: car.shortSpec || car.engine || 'Motor',
-    engine: car.engine || car.shortSpec || 'Motor',
+    year: Number(car.year) || 0,
+    km: Number(car.km) || 0,
+    price: Number(car.price) || 0,
+    status: car.status || 'Disponible',
+    fuel: car.fuel || 'Por confirmar',
+    engine: car.engine || 'Por confirmar',
     transmission: car.transmission || 'Por confirmar',
     traction: car.traction || 'Por confirmar',
-    doors: car.doors || 'Por confirmar',
-    price: car.price || '$0',
-    status: car.status || 'Disponible',
-    images: normalizeImages(car.images),
-    features: normalizeFeatures(car.features),
+    body: car.body || 'Por confirmar',
+    location: car.location || 'Santiago',
+    cover,
+    images,
+    tags: normalizeList(car.tags),
+    highlights: normalizeList(car.highlights),
+    featured: Boolean(car.featured),
   };
 }
 
-function loadCustomCars() {
-  try {
-    return JSON.parse(localStorage.getItem(CUSTOM_CARS_KEY)) || {};
-  } catch {
-    return {};
-  }
+function categoryLabel(category) {
+  return {
+    suv: 'SUV',
+    hatchback: 'Sed\u00e1n / Hatch',
+  }[category] || category;
 }
 
-function saveCustomCars() {
-  localStorage.setItem(CUSTOM_CARS_KEY, JSON.stringify(customCars));
-}
-
-function refreshCars() {
-  CARS = {};
-  Object.entries({ ...BASE_CARS, ...customCars }).forEach(([id, car]) => {
-    CARS[id] = normalizeCar(car);
-  });
-  CAR_IDS = Object.keys(CARS);
+function statusClass(status) {
+  return normalizeText(status).replace(/\s+/g, '-');
 }
 
 function whatsappLink(car, intent = 'availability') {
   const title = `${car.brand} ${car.model} ${car.year}`.trim();
   const messages = {
-    availability: `Hola Speed in Car! Me interesa el ${title} en ${car.price}. ¿Sigue disponible?`,
-    video: `Hola Speed in Car! ¿Me pueden enviar un video del ${title}?`,
-    visit: `Hola Speed in Car! Quiero agendar una visita para ver el ${title}.`,
+    availability: `Hola Speed in Car, me interesa el ${title} publicado en ${currency(car.price)}. \u00bfSigue disponible?`,
+    video: `Hola Speed in Car, \u00bfme pueden enviar un video del ${title}?`,
+    visit: `Hola Speed in Car, quiero agendar una visita para ver el ${title}.`,
   };
 
   return WSP_BASE + encodeURIComponent(messages[intent] || messages.availability);
 }
 
+function carUrl(car) {
+  return `/auto?id=${encodeURIComponent(car.id)}`;
+}
+
 function setImageFallback(scope = document) {
   scope.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', () => {
-      if (!img.dataset.fallbackApplied) {
-        img.dataset.fallbackApplied = 'true';
-        img.src = 'images/logo.png';
-      }
+      if (img.dataset.fallbackApplied) return;
+      img.dataset.fallbackApplied = 'true';
+      img.src = 'images/logo.png';
     });
   });
 }
 
-function buildSpec(label, value) {
-  return `<div class="modal-spec-item">
-    <span class="modal-spec-label">${escapeHTML(label)}</span>
-    <span class="modal-spec-value">${escapeHTML(value)}</span>
-  </div>`;
+function carSearchText(car) {
+  return normalizeText([
+    car.brand,
+    car.model,
+    car.year,
+    car.price,
+    car.km,
+    car.status,
+    car.engine,
+    car.transmission,
+    car.body,
+    categoryLabel(car.category),
+    ...car.tags,
+    ...car.highlights,
+  ].join(' '));
 }
 
-function buildCard(id, car) {
-  const badgeClass = car.status.toLowerCase() === 'vendido' ? 'vendido' : 'disponible';
-  const specs = [car.shortSpec, car.year, car.km].filter(Boolean);
-  const specHTML = specs.map((spec, index) => `
-    ${index ? '<span class="spec-dot">&bull;</span>' : ''}
-    <span class="spec">${escapeHTML(spec)}</span>
-  `).join('');
+function getFilteredCars() {
+  const query = normalizeText(state.query);
+  let cars = inventory.filter(car => {
+    const matchesFilter = state.filter === 'all' || car.category === state.filter;
+    const matchesQuery = !query || carSearchText(car).includes(query);
+    return matchesFilter && matchesQuery;
+  });
 
-  return `<div class="car-card" data-category="${escapeHTML(car.category)}" data-car-id="${escapeHTML(id)}" id="card-${escapeHTML(id)}">
-    <div class="car-img-wrap">
-      <img src="${escapeHTML(car.images[0])}" alt="${escapeHTML(`${car.brand} ${car.model} ${car.year}`)}" class="car-img" loading="lazy" />
-      <div class="car-badge ${badgeClass}">${escapeHTML(car.status)}</div>
-      <div class="car-overlay">
-        <button class="car-overlay-btn open-modal-btn" data-car-id="${escapeHTML(id)}">Ver detalles</button>
-      </div>
-    </div>
-    <div class="car-info">
-      <div class="car-brand">${escapeHTML(car.brand)}</div>
-      <h3 class="car-name">${escapeHTML(car.model)}</h3>
-      <div class="car-specs">${specHTML}</div>
-      <div class="car-footer">
-        <div class="car-price">${escapeHTML(car.price)}</div>
-        <button class="car-wsp-btn open-modal-btn" data-car-id="${escapeHTML(id)}" aria-label="Ver ${escapeHTML(car.model)}">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </button>
-      </div>
-      <div class="car-actions">
-        <a href="${whatsappLink(car, 'availability')}" target="_blank" class="car-action-btn car-action-primary">Consultar</a>
-        <button class="car-action-btn open-modal-btn" data-car-id="${escapeHTML(id)}">Detalles</button>
-      </div>
-    </div>
-  </div>`;
+  cars = [...cars].sort((a, b) => {
+    if (state.sort === 'price-asc') return a.price - b.price;
+    if (state.sort === 'price-desc') return b.price - a.price;
+    if (state.sort === 'year-desc') return b.year - a.year;
+    if (state.sort === 'km-asc') return a.km - b.km;
+    return Number(b.featured) - Number(a.featured) || b.year - a.year;
+  });
+
+  return cars;
 }
 
-function renderCatalog(filter = activeFilter) {
-  const grid = document.getElementById('cars-grid');
-  if (!grid) return;
+function buildCard(car) {
+  const title = `${car.brand} ${car.model}`;
+  const tags = uniqueList([categoryLabel(car.category), car.transmission, ...car.tags]).slice(0, 3);
 
-  activeFilter = filter;
-  const visibleIds = CAR_IDS.filter(id => filter === 'all' || CARS[id].category === filter);
-  grid.innerHTML = visibleIds.length
-    ? visibleIds.map(id => buildCard(id, CARS[id])).join('')
-    : '<p class="catalog-empty">No hay vehículos para este filtro.</p>';
+  return `
+    <article class="car-card" data-car-id="${escapeHTML(car.id)}">
+      <a href="${carUrl(car)}" class="car-image-button" aria-label="Ver ficha de ${escapeHTML(title)}">
+        <img src="${escapeHTML(car.cover)}" alt="${escapeHTML(title)}" class="car-img" loading="lazy" />
+        <span class="car-badge ${escapeHTML(statusClass(car.status))}">${escapeHTML(car.status)}</span>
+        <span class="car-shine"></span>
+      </a>
+      <div class="car-info">
+        <div class="car-kicker">${escapeHTML(car.brand)}</div>
+        <h3>${escapeHTML(car.model)}</h3>
+        <div class="car-meta">
+          <span>${escapeHTML(String(car.year))}</span>
+          <span>${escapeHTML(kmLabel(car.km))}</span>
+          <span>${escapeHTML(car.location)}</span>
+        </div>
+        <div class="tag-row">
+          ${tags.map(tag => `<span>${escapeHTML(tag)}</span>`).join('')}
+        </div>
+        <div class="car-footer">
+          <strong>${escapeHTML(currency(car.price))}</strong>
+          <button type="button" class="icon-btn open-modal-btn" data-car-id="${escapeHTML(car.id)}" aria-label="Abrir detalle">+</button>
+        </div>
+        <div class="car-actions">
+          <a href="${whatsappLink(car)}" target="_blank" class="btn btn-whatsapp">Consultar</a>
+          <a href="${carUrl(car)}" class="btn btn-outline">Ver ficha</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
 
-  setImageFallback(grid);
-  setupRevealTargets(grid.querySelectorAll('.car-card'));
+function renderCards(target, cars) {
+  if (!target) return;
+  target.innerHTML = cars.length
+    ? cars.map(buildCard).join('')
+    : '<p class="catalog-empty">No hay vehiculos para esta busqueda.</p>';
+  setImageFallback(target);
+  setupRevealTargets(target.querySelectorAll('.car-card'));
   revealOnScroll();
 }
 
-function setActiveFilterButton(filter) {
+function renderHome() {
+  const count = document.getElementById('inventory-count');
+  const grid = document.getElementById('home-featured-grid');
+  if (count) count.textContent = String(inventory.length);
+  if (grid) {
+    const featured = inventory
+      .filter(car => car.featured)
+      .concat(inventory.filter(car => !car.featured))
+      .slice(0, 3);
+    renderCards(grid, featured);
+  }
+}
+
+function renderCatalog() {
+  const grid = document.getElementById('cars-grid');
+  if (!grid) return;
+
+  const searchInput = document.getElementById('vehicle-search');
+  if (searchInput) state.query = searchInput.value;
+
+  const cars = getFilteredCars();
+  renderCards(grid, cars);
+
+  const total = document.getElementById('catalog-total');
+  const count = document.getElementById('catalog-count');
+  if (total) total.textContent = String(inventory.length);
+  if (count) count.textContent = `${cars.length} veh\u00edculo${cars.length === 1 ? '' : 's'} encontrados`;
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.filter === filter);
+    btn.classList.toggle('active', btn.dataset.filter === state.filter);
   });
 }
 
+function spec(label, value) {
+  return `
+    <div class="modal-spec-item">
+      <span>${escapeHTML(label)}</span>
+      <strong>${escapeHTML(value)}</strong>
+    </div>
+  `;
+}
+
 function openModal(id) {
-  const car = CARS[id];
-  if (!car) return;
-  currentCarId = id;
-
+  const car = inventory.find(item => item.id === id);
   const modal = document.getElementById('car-modal');
+  if (!car || !modal) return;
+
+  state.currentCarId = id;
+
   const mainImg = document.getElementById('modal-main-img');
-  const thumbsEl = document.getElementById('modal-thumbs');
-  if (!modal || !mainImg || !thumbsEl) return;
+  const thumbs = document.getElementById('modal-thumbs');
+  if (!mainImg || !thumbs) return;
 
-  const images = normalizeImages(car.images);
-
-  mainImg.src = images[0];
+  mainImg.src = car.images[0] || car.cover;
   mainImg.alt = `${car.brand} ${car.model}`;
-  document.getElementById('modal-img-badge').textContent = car.status;
 
-  thumbsEl.classList.toggle('is-single', images.length < 2);
-  thumbsEl.innerHTML = images.map((src, index) =>
-    `<button type="button" class="modal-thumb ${index === 0 ? 'active' : ''}" data-index="${index}">
-      <img src="${escapeHTML(src)}" alt="${escapeHTML(`${car.model} foto ${index + 1}`)}" />
-    </button>`
-  ).join('');
+  thumbs.innerHTML = car.images.length > 1
+    ? car.images.map((src, index) => `
+      <button type="button" class="modal-thumb ${index === 0 ? 'active' : ''}" data-src="${escapeHTML(src)}" aria-label="Foto ${index + 1}">
+        <img src="${escapeHTML(src)}" alt="${escapeHTML(car.model)} foto ${index + 1}" />
+      </button>
+    `).join('')
+    : '';
 
-  thumbsEl.querySelectorAll('.modal-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      thumbsEl.querySelectorAll('.modal-thumb').forEach(item => item.classList.remove('active'));
-      thumb.classList.add('active');
-      mainImg.src = images[Number(thumb.dataset.index)];
+  thumbs.querySelectorAll('.modal-thumb').forEach(btn => {
+    btn.addEventListener('click', () => {
+      thumbs.querySelectorAll('.modal-thumb').forEach(item => item.classList.remove('active'));
+      btn.classList.add('active');
+      mainImg.src = btn.dataset.src;
     });
   });
 
+  document.getElementById('modal-status').textContent = car.status;
   document.getElementById('modal-brand').textContent = car.brand;
   document.getElementById('modal-title').textContent = car.model;
-  document.getElementById('modal-price').textContent = car.price;
-  document.getElementById('modal-status').textContent = car.status;
-
+  document.getElementById('modal-price').textContent = currency(car.price);
   document.getElementById('modal-specs-grid').innerHTML =
-    buildSpec('Año', car.year) +
-    buildSpec('Kilometraje', car.km) +
-    buildSpec('Motor', car.engine) +
-    buildSpec('Transmisión', car.transmission) +
-    buildSpec('Tracción', car.traction) +
-    buildSpec('Puertas', car.doors);
+    spec('A\u00f1o', String(car.year)) +
+    spec('Kilometraje', kmLabel(car.km)) +
+    spec('Motor', car.engine) +
+    spec('Transmisi\u00f3n', car.transmission) +
+    spec('Tracci\u00f3n', car.traction) +
+    spec('Carrocer\u00eda', car.body);
 
-  document.getElementById('modal-features').innerHTML = car.features.length
-    ? car.features.map(feature => `<li>${CHECK_SVG} ${escapeHTML(feature)}</li>`).join('')
-    : `<li>${CHECK_SVG} Información detallada por confirmar</li>`;
+  document.getElementById('modal-features').innerHTML = car.highlights.length
+    ? car.highlights.map(item => `<li>${escapeHTML(item)}</li>`).join('')
+    : '<li>Informaci&oacute;n detallada por confirmar.</li>';
 
   document.getElementById('modal-wsp-btn').href = whatsappLink(car, 'availability');
   document.getElementById('modal-video-btn').href = whatsappLink(car, 'video');
   document.getElementById('modal-visit-btn').href = whatsappLink(car, 'visit');
 
-  setImageFallback(document.getElementById('modal-box'));
+  setImageFallback(modal);
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -345,205 +296,48 @@ function closeModal() {
   if (!modal) return;
   modal.classList.remove('open');
   document.body.style.overflow = '';
-  currentCarId = null;
+  state.currentCarId = null;
 }
 
-function navigateModal(dir) {
-  if (!currentCarId || !CAR_IDS.length) return;
-  const idx = CAR_IDS.indexOf(currentCarId);
-  openModal(CAR_IDS[(idx + dir + CAR_IDS.length) % CAR_IDS.length]);
+function navigateModal(direction) {
+  if (!state.currentCarId || !inventory.length) return;
+  const index = inventory.findIndex(car => car.id === state.currentCarId);
+  const next = inventory[(index + direction + inventory.length) % inventory.length];
+  if (next) openModal(next.id);
 }
 
-function setupRevealTargets(targets) {
-  targets.forEach((el, index) => {
-    el.classList.add('reveal');
-    el.style.transitionDelay = `${(index % 4) * 80}ms`;
-  });
-}
-
-function revealOnScroll() {
-  document.querySelectorAll('.reveal').forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 80) {
-      el.classList.add('visible');
-    }
-  });
-}
-
-function slugify(value) {
-  return String(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function renderAdminList() {
-  const list = document.getElementById('admin-list');
-  if (!list) return;
-
-  const ids = Object.keys(customCars);
-  if (!ids.length) {
-    list.innerHTML = '<div class="admin-list-empty">Todavía no hay autos agregados.</div>';
-    return;
-  }
-
-  list.innerHTML = ids.map(id => {
-    const car = normalizeCar(customCars[id]);
-    return `<div class="admin-list-item">
-      <img src="${escapeHTML(car.images[0])}" alt="${escapeHTML(`${car.brand} ${car.model}`)}" />
-      <div>
-        <span class="admin-list-name">${escapeHTML(car.brand)} ${escapeHTML(car.model)}</span>
-        <span class="admin-list-meta">${escapeHTML(car.year)} · ${escapeHTML(car.price)}</span>
-      </div>
-      <button type="button" class="admin-delete" data-delete-car="${escapeHTML(id)}" aria-label="Eliminar ${escapeHTML(car.model)}">×</button>
-    </div>`;
-  }).join('');
-
-  setImageFallback(list);
-}
-
-function showAdminMessage(message) {
-  const el = document.getElementById('admin-message');
-  if (!el) return;
-  el.textContent = message;
-  window.clearTimeout(showAdminMessage.timer);
-  showAdminMessage.timer = window.setTimeout(() => {
-    el.textContent = '';
-  }, 3000);
-}
-
-function setupAdmin() {
-  const form = document.getElementById('admin-car-form');
-  const clearBtn = document.getElementById('admin-clear');
-  const list = document.getElementById('admin-list');
-  if (!form) return;
-
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const brand = document.getElementById('admin-brand').value.trim();
-    const model = document.getElementById('admin-model').value.trim();
-    const year = document.getElementById('admin-year').value.trim();
-    const id = `${slugify(`${brand}-${model}-${year}`)}-${Date.now()}`;
-
-    customCars[id] = {
-      category: document.getElementById('admin-category').value,
-      brand,
-      model,
-      year,
-      km: document.getElementById('admin-km').value.trim(),
-      shortSpec: document.getElementById('admin-engine').value.trim(),
-      engine: document.getElementById('admin-engine').value.trim(),
-      transmission: document.getElementById('admin-transmission').value.trim(),
-      traction: document.getElementById('admin-traction').value.trim(),
-      doors: document.getElementById('admin-doors').value.trim(),
-      price: document.getElementById('admin-price').value.trim(),
-      status: document.getElementById('admin-status').value,
-      images: normalizeImages(document.getElementById('admin-images').value),
-      features: normalizeFeatures(document.getElementById('admin-features').value),
-    };
-
-    saveCustomCars();
-    refreshCars();
-    renderCatalog(activeFilter);
-    renderAdminList();
-    form.reset();
-    showAdminMessage('Auto agregado al catálogo.');
-  });
-
-  clearBtn?.addEventListener('click', () => {
-    if (!Object.keys(customCars).length) {
-      showAdminMessage('No hay autos agregados para borrar.');
-      return;
-    }
-
-    if (!window.confirm('¿Borrar todos los autos agregados en este navegador?')) return;
-    customCars = {};
-    saveCustomCars();
-    refreshCars();
-    renderCatalog(activeFilter);
-    renderAdminList();
-    showAdminMessage('Autos agregados eliminados.');
-  });
-
-  list?.addEventListener('click', event => {
-    const btn = event.target.closest('[data-delete-car]');
-    if (!btn) return;
-    delete customCars[btn.dataset.deleteCar];
-    saveCustomCars();
-    refreshCars();
-    renderCatalog(activeFilter);
-    renderAdminList();
-    showAdminMessage('Auto eliminado.');
-  });
-
-  renderAdminList();
-}
-
-function setupNavbar() {
-  const navbar = document.getElementById('navbar');
-  const hamburger = document.getElementById('hamburger');
-  const navLinksEl = document.getElementById('nav-links');
-  if (!navbar || !hamburger || !navLinksEl) return;
-
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section[id]');
-  const page = document.body.dataset.page || 'home';
-
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
-
-  function setActiveLink() {
-    if (page !== 'home') {
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.dataset.navPage === page);
-      });
-      return;
-    }
-
-    let current = '';
-    sections.forEach(section => {
-      if (window.scrollY >= section.offsetTop - 120) current = section.id;
-    });
-    navLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-    });
-  }
-
-  window.addEventListener('scroll', setActiveLink, { passive: true });
-  setActiveLink();
-
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    navLinksEl.classList.toggle('mobile-open');
-  });
-
-  navLinksEl.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      navLinksEl.classList.remove('mobile-open');
-    });
-  });
-}
-
-function setupFilters() {
+function setupCatalogControls() {
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      activeFilter = btn.dataset.filter;
-      setActiveFilterButton(activeFilter);
-      renderCatalog(activeFilter);
+      state.filter = btn.dataset.filter || 'all';
+      renderCatalog();
     });
+  });
+
+  const search = document.getElementById('vehicle-search');
+  if (search) search.value = '';
+  search?.addEventListener('input', event => {
+    state.query = event.target.value;
+    renderCatalog();
+  });
+  search?.addEventListener('search', event => {
+    state.query = event.target.value;
+    renderCatalog();
+  });
+
+  const sort = document.getElementById('vehicle-sort');
+  sort?.addEventListener('change', event => {
+    state.sort = event.target.value;
+    renderCatalog();
   });
 }
 
 function setupModal() {
   const modal = document.getElementById('car-modal');
-  const modalClose = document.getElementById('modal-close');
-  const modalPrev = document.getElementById('modal-prev');
-  const modalNext = document.getElementById('modal-next');
-  if (!modal || !modalClose || !modalPrev || !modalNext) return;
+  const close = document.getElementById('modal-close');
+  const prev = document.getElementById('modal-prev');
+  const next = document.getElementById('modal-next');
+  if (!modal || !close || !prev || !next) return;
 
   document.addEventListener('click', event => {
     const btn = event.target.closest('.open-modal-btn');
@@ -552,12 +346,12 @@ function setupModal() {
     openModal(btn.dataset.carId);
   });
 
-  modalClose.addEventListener('click', closeModal);
+  close.addEventListener('click', closeModal);
   modal.addEventListener('click', event => {
     if (event.target === modal) closeModal();
   });
-  modalPrev.addEventListener('click', () => navigateModal(-1));
-  modalNext.addEventListener('click', () => navigateModal(1));
+  prev.addEventListener('click', () => navigateModal(-1));
+  next.addEventListener('click', () => navigateModal(1));
 
   document.addEventListener('keydown', event => {
     if (!modal.classList.contains('open')) return;
@@ -567,85 +361,116 @@ function setupModal() {
   });
 }
 
+function setupNavbar() {
+  const header = document.getElementById('navbar');
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav-links');
+  if (!header || !hamburger || !nav) return;
+
+  const page = document.body.dataset.page || 'home';
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.dataset.navPage === page);
+  });
+
+  const updateHeader = () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  };
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('mobile-open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('mobile-open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
 function setupSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(event) {
-      const href = this.getAttribute('href');
-      if (!href || href === '#' || !href.startsWith('#')) return;
-
-      const target = document.querySelector(href);
+    anchor.addEventListener('click', event => {
+      const target = document.querySelector(anchor.getAttribute('href'));
       if (!target) return;
-
       event.preventDefault();
       window.scrollTo({
-        top: target.getBoundingClientRect().top + window.scrollY - 70,
+        top: target.getBoundingClientRect().top + window.scrollY - 80,
         behavior: 'smooth',
       });
     });
   });
 }
 
-function animateCounter(el, target, prefix = '', suffix = '') {
-  let start = null;
-
-  function step(timestamp) {
-    if (!start) start = timestamp;
-    const progress = Math.min((timestamp - start) / 1800, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = prefix + Math.floor(eased * target).toLocaleString('es-CL') + suffix;
-    if (progress < 1) requestAnimationFrame(step);
-  }
-
-  requestAnimationFrame(step);
+function setupRevealTargets(targets) {
+  targets.forEach((element, index) => {
+    element.classList.add('reveal');
+    element.style.transitionDelay = `${(index % 4) * 50}ms`;
+  });
 }
 
-function setupStatCounter() {
-  const stats = document.getElementById('hero-stats');
-  if (!stats) return;
-
-  new IntersectionObserver(entries => {
-    if (!entries[0].isIntersecting || statsAnimated) return;
-    statsAnimated = true;
-
-    document.querySelectorAll('.stat-num').forEach(el => {
-      const text = el.textContent;
-      if (text.includes('+')) animateCounter(el, Number(text.replace(/\D/g, '')), '+');
-      else if (text.includes('%')) animateCounter(el, 100, '', '%');
-      else animateCounter(el, Number(text.replace(/\D/g, '')));
-    });
-  }, { threshold: 0.5 }).observe(stats);
+function revealOnScroll() {
+  document.querySelectorAll('.reveal').forEach(element => {
+    if (element.getBoundingClientRect().top < window.innerHeight - 80) {
+      element.classList.add('visible');
+    }
+  });
 }
 
 function setupWhatsappFloat() {
-  const wspFloat = document.getElementById('wsp-float');
-  if (!wspFloat) return;
-
-  wspFloat.style.cssText += 'opacity:0;pointer-events:none;transition:opacity .3s,transform .3s,background .3s';
-  window.addEventListener('scroll', () => {
-    const show = window.scrollY > 400;
-    wspFloat.style.opacity = show ? '1' : '0';
-    wspFloat.style.pointerEvents = show ? 'auto' : 'none';
-  }, { passive: true });
+  const btn = document.getElementById('wsp-float');
+  if (!btn) return;
+  const update = () => {
+    btn.classList.toggle('visible', window.scrollY > 420);
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
 }
 
 function updateFooterYear() {
-  const footerYear = document.getElementById('footer-year');
-  if (footerYear) footerYear.textContent = new Date().getFullYear();
+  document.querySelectorAll('#footer-year').forEach(el => {
+    el.textContent = String(new Date().getFullYear());
+  });
+}
+
+function hydrateFromRemote(cars) {
+  if (!Array.isArray(cars) || !cars.length) return;
+  inventory = cars.map(normalizeCar);
+  renderHome();
+  renderCatalog();
+}
+
+async function setupRemoteInventory() {
+  const config = window.SPEEDINCAR_FIREBASE_CONFIG || {};
+  if (!config.apiKey || !config.projectId || !config.appId) return;
+
+  try {
+    const firebase = await import('./firebase-service.js');
+    if (!firebase.isFirebaseConfigured()) return;
+    remoteUnsubscribe = firebase.subscribeVehicles(hydrateFromRemote, error => {
+      console.warn('No se pudo leer inventario remoto', error);
+    });
+  } catch (error) {
+    console.warn('Firebase no disponible', error);
+  }
 }
 
 function init() {
-  refreshCars();
-  renderCatalog(activeFilter);
-  setActiveFilterButton(activeFilter);
-  setupNavbar();
-  setupFilters();
+  renderHome();
+  setupCatalogControls();
+  renderCatalog();
   setupModal();
-  setupAdmin();
+  setupNavbar();
   setupSmoothScroll();
-  setupStatCounter();
   setupWhatsappFloat();
   updateFooterYear();
-  setupRevealTargets(document.querySelectorAll('.service-card, .step, .about-stat-card, .about-img-card'));
+  setupRemoteInventory();
+  setupRevealTargets(document.querySelectorAll('.service-card, .timeline-item, .trust-grid, .contact-layout'));
   revealOnScroll();
   window.addEventListener('scroll', revealOnScroll, { passive: true });
   setImageFallback();
